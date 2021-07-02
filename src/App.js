@@ -3,12 +3,15 @@ import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import Home from './pages/Home'
 import Header from './components/nav/Header';
+import { ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css"
 
 function App() {
   return (
 
   <>
         <Header />
+        <ToastContainer />
 
         <Switch>
           <Route path="/" exact component={Home} />
