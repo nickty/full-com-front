@@ -1,30 +1,43 @@
 import React from 'react'
 import {Menu} from 'antd'
-import { MailOutlined, AppstoreOutlined, SearchOutlined } from '@ant-design/icons'
+import { UserAddOutlined, AppstoreOutlined, SettingFilled, LoginOutlined } from '@ant-design/icons'
 import { useState } from 'react'
 
-const { SubMenu } = Menu
+const { SubMenu, Item } = Menu
 
 const Header = () => {
 
-    const [current, setCurrent ] = useState('')
+    const [current, setCurrent ] = useState('home')
 
-    const handleClick = () => {
-
+    const handleClick = (e) => {
+        setCurrent(e.key)
     }
 
     return (
-        <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
-            <Menu.Item key="main">
+        <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal" className="d-block">
+            <Item key="home" icon={<AppstoreOutlined /> }>
                Home
-            </Menu.Item>
+            </Item>
 
-            <SubMenu icon={<SearchOutlined />} title="Register">
+                     
+
+            <SubMenu icon={<SettingFilled />} title="Username">
                 
-                    <Menu.Item key="Setting:1">Option 1</Menu.Item>
-                    <Menu.Item key="Setting:2">Option 2</Menu.Item>
+                    <Item key="Setting:1">Option 1</Item>
+                    <Item key="Setting:2">Option 2</Item>
     
             </SubMenu>
+
+
+            <Item key="register" icon={<UserAddOutlined /> } className="float-right">
+               Register
+            </Item>
+
+            <Item key="login" icon={<LoginOutlined /> } className="float-right">
+               Login
+            </Item>
+
+           
         </Menu>
     )
 }
