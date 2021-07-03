@@ -49,7 +49,7 @@ const Login = ({ history }) => {
             }
         })
        })
-       .catch()
+       .catch(err => console.log(err))
 
            
 
@@ -82,7 +82,7 @@ const Login = ({ history }) => {
                 }
             })
            })
-           .catch()
+           .catch(err => console.log(err))
 
             history.push('/')
        })
