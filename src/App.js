@@ -12,6 +12,8 @@ import { useEffect } from 'react';
 import { auth } from './firebase';
 import ForgotPassword from './pages/auth/ForgotPassword';
 import { currentUser } from './functions/auth';
+import History from './pages/user/History';
+import UserRoute from './components/routes/UserRoute';
 
 
 function App() {
@@ -57,6 +59,8 @@ function App() {
           <Route path="/login" exact component={Login} />
           <Route path="/register/complete" exact component={RegisterComplete} />
           <Route path="/forgot/password" exact component={ForgotPassword} />
+
+          <UserRoute path="/user/history" exact component={History} />
         </Switch>
   </>    
     
