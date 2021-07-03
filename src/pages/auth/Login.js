@@ -1,16 +1,44 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { auth } from '../../firebase';
 
-const Login = () => {
+const Login = ({ history }) => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
+    const [loading, setLoading] = useState(false)
+
+    const dispatch = useDispatch()
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-       console.log(email)
+        setLoading(true)
+
+       try {
+
+        const result = await auth.signInWithEmailAndPassword(email, password)
+
+       const { user } = result
+       const idTokenResult = await user.getIdTokenResult();
+
+            dispatch({
+                type:'LOGGED_IN_USER',
+                payload: {
+                email: user.email,
+                token: idTokenResult.token
+                }
+            })
+
+            history.push('/')
+           
+       } catch (error) {
+           console.log(error)
+           toast.error(error.message)
+           setLoading(false)
+       }
 
     }
     const loginForm = () => (
