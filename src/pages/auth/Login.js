@@ -5,15 +5,7 @@ import { toast } from 'react-toastify';
 import { auth, googleAuthProvider } from '../../firebase';
 import { Link } from 'react-router-dom'
 import { useEffect } from 'react';
-import axios from 'axios'
-
-const createOrUpdateUser = async (authToken) =>{
-    return await axios.post(`${process.env.REACT_APP_API}/create-or-update-user`, {}, {
-        headers: {
-            authToken
-        }
-    })
-}
+import { createOrUpdateUser } from '../../functions/auth';
 
 const Login = ({ history }) => {
 
@@ -45,18 +37,23 @@ const Login = ({ history }) => {
        const idTokenResult = await user.getIdTokenResult();
 
        createOrUpdateUser(idTokenResult.token)
-       .then(res => console.log(res))
+       .then(res => {
+        dispatch({
+            type:'LOGGED_IN_USER',
+            payload: {
+            name: res.data.name,
+            email: res.data.email,
+            token: idTokenResult.token,
+            role: res.data.role,
+            _id: res.data._id
+            }
+        })
+       })
        .catch()
 
-            // dispatch({
-            //     type:'LOGGED_IN_USER',
-            //     payload: {
-            //     email: user.email,
-            //     token: idTokenResult.token
-            //     }
-            // })
+           
 
-            // history.push('/')
+            history.push('/')
            
        } catch (error) {
            console.log(error)
@@ -72,13 +69,20 @@ const Login = ({ history }) => {
            const { user } = result
            const idTokenResult = user.getIdTokenResult();
 
-           dispatch({
-            type:'LOGGED_IN_USER',
-            payload: {
-            email: user.email,
-            token: idTokenResult.token
-            }
-        })
+           createOrUpdateUser(idTokenResult.token)
+           .then(res => {
+            dispatch({
+                type:'LOGGED_IN_USER',
+                payload: {
+                name: res.data.name,
+                email: res.data.email,
+                token: idTokenResult.token,
+                role: res.data.role,
+                _id: res.data._id
+                }
+            })
+           })
+           .catch()
 
             history.push('/')
        })
