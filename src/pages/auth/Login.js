@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { auth, googleAuthProvider } from '../../firebase';
+import { Link } from 'react-router-dom'
 
 const Login = ({ history }) => {
 
@@ -80,6 +81,7 @@ const Login = ({ history }) => {
                    {loading ? 'Loading..' : ''}
                    {loginForm()}
                    <button onClick={googleLogin} className="btn btn-primary mt-3 w-100">Login with Google</button>
+                <Link to="/forgot/password" className="float-right text-danger mt-3">Forgot Password</Link>
                </div>
            </div>
         </div>

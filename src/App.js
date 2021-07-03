@@ -10,6 +10,7 @@ import RegisterComplete from './pages/auth/RegisterComplete';
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react';
 import { auth } from './firebase';
+import ForgotPassword from './pages/auth/ForgotPassword';
 
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
           <Route path="/register" exact component={Register} />
           <Route path="/login" exact component={Login} />
           <Route path="/register/complete" exact component={RegisterComplete} />
+          <Route path="/forgot/password" exact component={ForgotPassword} />
         </Switch>
   </>    
     
