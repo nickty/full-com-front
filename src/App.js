@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux'
 import { useEffect } from 'react';
 import { auth } from './firebase';
 import ForgotPassword from './pages/auth/ForgotPassword';
-import { createOrUpdateUser, currentUser } from './functions/auth';
+import { currentUser } from './functions/auth';
 
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
       if(user){
         const idTokenResult = await user.getIdTokenResult()
 
-        createOrUpdateUser(idTokenResult.token)
+        currentUser(idTokenResult.token)
            .then(res => {
             dispatch({
                 type:'LOGGED_IN_USER',
