@@ -1,9 +1,10 @@
 import { LoadingOutlined, LoginOutlined } from '@ant-design/icons';
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { auth, googleAuthProvider } from '../../firebase';
 import { Link } from 'react-router-dom'
+import { useEffect } from 'react';
 
 const Login = ({ history }) => {
 
@@ -13,6 +14,14 @@ const Login = ({ history }) => {
     const [loading, setLoading] = useState(false)
 
     const dispatch = useDispatch()
+
+    const { user } = useSelector(state => state)
+
+    useEffect(()=>{
+        if(user && user.token){
+            history.push('/')
+        }
+    }, [user])
 
     const handleSubmit = async (e) => {
         e.preventDefault();

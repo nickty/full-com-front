@@ -1,6 +1,8 @@
 import { LoadingOutlined } from '@ant-design/icons'
 import React from 'react'
+import { useEffect } from 'react'
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { auth } from '../../firebase'
 
@@ -8,6 +10,14 @@ const ForgotPassword = ({history}) => {
 
     const [email, setEmail] = useState('')
     const [loading, setLoading] = useState('')
+
+    const { user } = useSelector(state => state)
+
+    useEffect(()=>{
+        if(user && user.token){
+            history.push('/')
+        }
+    }, [user])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
