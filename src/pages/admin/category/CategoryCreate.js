@@ -1,11 +1,12 @@
-import { LoadingOutlined } from '@ant-design/icons'
+import { DeleteOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons'
 import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import AdminNav from '../../../components/nav/AdminNav'
-import { createCategory, getCategories } from '../../../functions/category'
+import { createCategory, getCategories, removeCategory } from '../../../functions/category'
+import { Link } from 'react-router-dom'
 
 const CategoryCreate = () => {
 const [name, setName] = useState('')
@@ -30,6 +31,7 @@ const loadCategories = () => getCategories().then(c => setCategories(c.data))
             setLoading(false)
             setName('')
             toast.success(`"${res.data.name}" is created`)
+            loadCategories()
         })
         .catch(err => {
             console.log(err)
@@ -46,6 +48,24 @@ const loadCategories = () => getCategories().then(c => setCategories(c.data))
             </div>
         </form>
     }
+
+    const handleRemove = async (slug) =>{
+        if(window.confirm("Delete?")){
+            setLoading(true)
+            removeCategory(slug, user.token)
+            .then(res => {
+                setLoading(false)
+                toast.error(`"${res.data.name}" deleted`)
+                loadCategories()
+            })
+            .catch(err => {
+                console.log(err)
+                setLoading(false)
+                if(err.response.status === 400) toast.error(err.response.data)
+            })
+        }
+
+    }
     return (
         <div className="container-fluid">
             <div className="row">
@@ -56,7 +76,9 @@ const loadCategories = () => getCategories().then(c => setCategories(c.data))
                     <h4>Create Category</h4>
                     {loading ? <LoadingOutlined /> : createCtegoryForm()}
                     <hr />
-                    {categories.length}
+                    {categories.map( cat => (<div className="alert alert-primary" key={cat._id}>
+                        {cat.name} <span className="float-right" onClick={() => handleRemove(`${cat.slug}`)}><DeleteOutlined /></span><Link to={`/admin/category/${cat.slug}`}><span className="mr-3 float-right"><EditOutlined /></span></Link>
+                    </div>))}
                 </div>
             </div>
         </div>
