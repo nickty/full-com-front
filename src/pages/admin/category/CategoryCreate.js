@@ -8,6 +8,7 @@ import AdminNav from '../../../components/nav/AdminNav'
 import { createCategory, getCategories, removeCategory } from '../../../functions/category'
 import { Link } from 'react-router-dom'
 import CategoryForm from '../../../components/forms/CategoryForm'
+import LocalSearch from '../../../components/forms/LocalSearch'
 
 const CategoryCreate = () => {
 const [name, setName] = useState('')
@@ -81,9 +82,8 @@ const loadCategories = () => getCategories().then(c => setCategories(c.data))
                     <h4>Create Category</h4>
                     {loading ? <LoadingOutlined /> : <CategoryForm handleSubmit={handleSubmit} name={name} setName={setName} />}
 
-                    {/* step 2 */}
-                    <input type="search" placeholder="Filter" name="" value={keyword} onChange={handleSearchChange} className="form-control mb-3" />
-                    <hr />
+                   <hr />
+                   <LocalSearch keyword={keyword} setKeyword={setKeyword} />
                     {/* step 5  */}
                     {categories.filter(searched(keyword)).map( cat => (<div className="alert alert-primary" key={cat._id}>
                         {cat.name} <span className="float-right" onClick={() => handleRemove(`${cat.slug}`)}><DeleteOutlined /></span><Link to={`/admin/category/${cat.slug}`}><span className="mr-3 float-right"><EditOutlined /></span></Link>
