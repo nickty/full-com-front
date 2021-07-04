@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+import CategoryForm from '../../../components/forms/CategoryForm'
 import AdminNav from '../../../components/nav/AdminNav'
 import { getCategory, updateCategory } from '../../../functions/category'
 
@@ -39,15 +40,7 @@ const loadCategory = () => getCategory(match.params.slug).then(c => setName(c.da
             if(err.response.status === 400) toast.error(err.response.data)
         })
     }
-    const createCtegoryForm = () => {
-        return <form onSubmit={handleSubmit}>
-            <div className="form-group">
-                <label for="name">Name</label>
-                <input placeholder="Type category name" className="form-control" type="text" value={name} onChange={e => setName(e.target.value)} autoFocus required />
-                <button type="submit" disabled={!name} className="btn btn-primary mt-3">Submit</button>
-            </div>
-        </form>
-    }
+
 
   
     return (
@@ -58,7 +51,7 @@ const loadCategory = () => getCategory(match.params.slug).then(c => setName(c.da
                 </div>
                 <div className="col">
                     <h4>Create Category</h4>
-                    {loading ? <LoadingOutlined /> : createCtegoryForm()}
+                    {loading ? <LoadingOutlined /> : <CategoryForm handleSubmit={handleSubmit} name={name} setName={setName} />}
                    
                 </div>
             </div>

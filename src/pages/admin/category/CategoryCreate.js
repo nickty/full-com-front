@@ -7,6 +7,7 @@ import { toast } from 'react-toastify'
 import AdminNav from '../../../components/nav/AdminNav'
 import { createCategory, getCategories, removeCategory } from '../../../functions/category'
 import { Link } from 'react-router-dom'
+import CategoryForm from '../../../components/forms/CategoryForm'
 
 const CategoryCreate = () => {
 const [name, setName] = useState('')
@@ -39,15 +40,7 @@ const loadCategories = () => getCategories().then(c => setCategories(c.data))
             if(err.response.status === 400) toast.error(err.response.data)
         })
     }
-    const createCtegoryForm = () => {
-        return <form onSubmit={handleSubmit}>
-            <div className="form-group">
-                <label for="name">Name</label>
-                <input placeholder="Type category name" className="form-control" type="text" value={name} onChange={e => setName(e.target.value)} autoFocus required />
-                <button type="submit" disabled={!name} className="btn btn-primary mt-3">Submit</button>
-            </div>
-        </form>
-    }
+   
 
     const handleRemove = async (slug) =>{
         if(window.confirm("Delete?")){
@@ -74,7 +67,7 @@ const loadCategories = () => getCategories().then(c => setCategories(c.data))
                 </div>
                 <div className="col">
                     <h4>Create Category</h4>
-                    {loading ? <LoadingOutlined /> : createCtegoryForm()}
+                    {loading ? <LoadingOutlined /> : <CategoryForm handleSubmit={handleSubmit} name={name} setName={setName} />}
                     <hr />
                     {categories.map( cat => (<div className="alert alert-primary" key={cat._id}>
                         {cat.name} <span className="float-right" onClick={() => handleRemove(`${cat.slug}`)}><DeleteOutlined /></span><Link to={`/admin/category/${cat.slug}`}><span className="mr-3 float-right"><EditOutlined /></span></Link>
