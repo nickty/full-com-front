@@ -60,9 +60,11 @@ const Header = () => {
 
             {user && (
                  <SubMenu icon={<SettingFilled />} title={user.email && user.email.split('@')[0] } className="float-right">
-                
-                 <Item key="Setting:1">Option 1</Item>
-                 <Item key="Setting:2">Option 2</Item>
+
+                  { user.role === 'subscriber' && <Item key="Setting:1"><Link to="/user/history">Dashboard</Link></Item>}              
+                  { user.role === 'admin' && <Item key="Setting:2"><Link to="/admin/dashboard">Dashboard</Link></Item>}              
+                 
+    
                  <Item icon={<LogoutOutlined />} onClick={logout}>Logout</Item>
  
          </SubMenu>
