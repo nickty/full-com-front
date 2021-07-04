@@ -14,6 +14,18 @@ const [name, setName] = useState('')
 const [loading, setLoading] = useState(false)
 const [categories, setCategories] = useState([])
 
+//step 1
+const [keyword, setKeyword] = useState('')
+
+//step 3
+const handleSearchChange = (e) => {
+    e.preventDefault()
+
+    setKeyword(e.target.value.toLowerCase())
+}
+
+const searched = keyword => c => c.name.toLowerCase().includes(keyword)
+
 const { user } = useSelector(state=>state)
 
 useEffect(() => {
@@ -68,8 +80,12 @@ const loadCategories = () => getCategories().then(c => setCategories(c.data))
                 <div className="col">
                     <h4>Create Category</h4>
                     {loading ? <LoadingOutlined /> : <CategoryForm handleSubmit={handleSubmit} name={name} setName={setName} />}
+
+                    {/* step 2 */}
+                    <input type="search" placeholder="Filter" name="" value={keyword} onChange={handleSearchChange} className="form-control mb-3" />
                     <hr />
-                    {categories.map( cat => (<div className="alert alert-primary" key={cat._id}>
+                    {/* step 5  */}
+                    {categories.filter(searched(keyword)).map( cat => (<div className="alert alert-primary" key={cat._id}>
                         {cat.name} <span className="float-right" onClick={() => handleRemove(`${cat.slug}`)}><DeleteOutlined /></span><Link to={`/admin/category/${cat.slug}`}><span className="mr-3 float-right"><EditOutlined /></span></Link>
                     </div>))}
                 </div>
