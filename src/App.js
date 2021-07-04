@@ -14,6 +14,8 @@ import ForgotPassword from './pages/auth/ForgotPassword';
 import { currentUser } from './functions/auth';
 import History from './pages/user/History';
 import UserRoute from './components/routes/UserRoute';
+import Password from './pages/user/Password';
+import Wishlist from './pages/user/Wishlist';
 
 
 function App() {
@@ -61,6 +63,8 @@ function App() {
           <Route path="/forgot/password" exact component={ForgotPassword} />
 
           <UserRoute path="/user/history" exact component={History} />
+          <UserRoute path="/user/password" exact component={Password} />
+          <UserRoute path="/user/wishlist" exact component={Wishlist} />
         </Switch>
   </>    
     
