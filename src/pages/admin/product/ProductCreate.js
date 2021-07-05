@@ -1,16 +1,19 @@
 import React from 'react'
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 import AdminNav from '../../../components/nav/AdminNav'
+import { createProduct } from '../../../functions/product'
 
 const initialState = {
     title: '',
-    desicription: '',
+    description: '',
     price: '',
     categories: [],
     category:'',
     subs: [],
     shipping: '',
-    quanitity: '', 
+    quantity: '', 
     images: [],
     colors: ["Black", "Brown", "Silver", "White", "Blue"], 
     brands: ["Apple", "HP", "Nokia", "Yamaha", "Microsoft"], 
@@ -21,12 +24,25 @@ const initialState = {
 const ProductCreate = () => {
     const [values, setValues] = useState(initialState)
 
-    const handleChange = () => {
+    const {user} = useSelector(state => state)
 
+    const handleChange = (e) => {
+        setValues({
+            ...values, [e.target.name] : e.target.value
+        })
     }
 
     const handleSubmit = e => {
         e.preventDefault()
+
+        createProduct(values, user.token)
+        .then(res => {
+            console.log(res)
+        })
+        .catch(err => {
+            console.log(err)
+            if(err.response.status === 400) toast.error(err.response.data)
+        })
     }
     return (
         <div className="container-fluid">
@@ -45,14 +61,14 @@ const ProductCreate = () => {
                         </div>
                         <div className="form-group">
                             <label for="description">Description</label>
-                            <input onChange={handleChange} type="text" name="description" value={values.desicription} className="form-control" />
+                            <input onChange={handleChange} type="text" name="description" value={values.description} className="form-control" />
                         </div>
                         <div className="form-group">
-                            <label for="description">Price</label>
+                            <label for="shipping">Price</label>
                             <input onChange={handleChange} type="text" name="price" value={values.price} className="form-control" />
                         </div>
                         <div className="form-group">
-                            <label for="description">Shipping</label>
+                            <label for="shipping">Shipping</label>
                             <select name="shipping" className="form-control" onChange={handleChange}>
                                 <option disabled>Please select</option>
                                 <option value="no">No</option>
@@ -61,8 +77,8 @@ const ProductCreate = () => {
                             </select>
                         </div>
                         <div className="form-group">
-                            <label for="description">Quanitity</label>
-                            <input onChange={handleChange} type="number" name="quantity" value={values.quanitity} className="form-control" />
+                            <label for="description">Quantity</label>
+                            <input onChange={handleChange} type="number" name="quantity" value={values.quantity} className="form-control" />
                         </div>
 
                         <div className="form-group">
@@ -75,8 +91,8 @@ const ProductCreate = () => {
                         </div>
 
                         <div className="form-group">
-                            <label for="color">Brands</label>
-                            <select name="color" className="form-control" onChange={handleChange}>
+                            <label for="brand">Brands</label>
+                            <select name="brand" className="form-control" onChange={handleChange}>
                                 <option disabled>Please select</option>
                                 {values.brands.map(c => <option key={c}>{c}</option>)}
                                 
