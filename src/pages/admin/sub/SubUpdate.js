@@ -14,6 +14,8 @@ const SubUpdate = ({history, match}) => {
 const [name, setName] = useState('')
 const [loading, setLoading] = useState(false)
 const [parent, setParent] = useState('')
+const [category, setCategory] = useState('')
+const [categories, setCategories] = useState([])
 
 const { user } = useSelector(state=>state)
 
@@ -58,6 +60,16 @@ const loadSub = () => getSub(match.params.slug).then(c => {
                     <AdminNav />
                 </div>
                 <div className="col">
+                    <div className="form-group">
+                        <label for="category">Parent Category</label>
+                        <select name="category" className="form-control" onChange={e => setCategory(e.target.value)}>
+                            <option disabled>Select Category</option>
+                            {categories.length > 0 && categories.map((cat) => (
+                                <option value={cat._id} key={cat._id} selected={cat._id===parent}>{cat.name}</option>
+                            ))}
+                            
+                        </select>
+                    </div>
                     <h4>Update Sub-category</h4>
                     {loading ? <LoadingOutlined /> : <CategoryForm handleSubmit={handleSubmit} name={name} setName={setName} />}
                    
