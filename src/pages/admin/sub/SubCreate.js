@@ -15,6 +15,7 @@ const SubCreate = () => {
 const [name, setName] = useState('')
 const [loading, setLoading] = useState(false)
 const [categories, setCategories] = useState([])
+const [subs, setSubs] = useState([])
 const [category, setCategory] = useState('')
 
 //step 1
@@ -33,9 +34,11 @@ const { user } = useSelector(state=>state)
 
 useEffect(() => {
     loadCategories()
+    loadSubs()
 },[])
 
 const loadCategories = () => getCategories().then(c => setCategories(c.data))
+const loadSubs = () => getSubs().then(c => setSubs(c.data))
 
 
     const handleSubmit = e => {
@@ -48,6 +51,7 @@ const loadCategories = () => getCategories().then(c => setCategories(c.data))
             setLoading(false)
             setName('')
             toast.success(`"${res.data.name}" is created`)
+            loadSubs()
        
         })
         .catch(err => {
@@ -65,7 +69,7 @@ const loadCategories = () => getCategories().then(c => setCategories(c.data))
             .then(res => {
                 setLoading(false)
                 toast.error(`"${res.data.name}" deleted`)
-               
+               loadSubs()
             })
             .catch(err => {
                 console.log(err)
@@ -98,9 +102,9 @@ const loadCategories = () => getCategories().then(c => setCategories(c.data))
                    <hr />
                    <LocalSearch keyword={keyword} setKeyword={setKeyword} />
                     {/* step 5  */}
-                    {/* {categories.filter(searched(keyword)).map( cat => (<div className="alert alert-primary" key={cat._id}>
-                        {cat.name} <span className="float-right" onClick={() => handleRemove(`${cat.slug}`)}><DeleteOutlined /></span><Link to={`/admin/category/${cat.slug}`}><span className="mr-3 float-right"><EditOutlined /></span></Link>
-                    </div>))} */}
+                    {subs.filter(searched(keyword)).map( scat => (<div className="alert alert-primary" key={scat._id}>
+                        {scat.name} <span className="float-right" onClick={() => handleRemove(`${scat.slug}`)}><DeleteOutlined /></span><Link to={`/admin/sub/${scat.slug}`}><span className="mr-3 float-right"><EditOutlined /></span></Link>
+                    </div>))}
                 </div>
             </div>
         </div>
