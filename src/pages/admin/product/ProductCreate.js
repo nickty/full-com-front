@@ -6,14 +6,14 @@ import AdminNav from '../../../components/nav/AdminNav'
 import { createProduct } from '../../../functions/product'
 
 const initialState = {
-    title: '',
-    description: '',
-    price: '',
+    title: 'Mackbook',
+    description: 'this is new backbook best apple product',
+    price: '45000',
     categories: [],
     category:'',
     subs: [],
-    shipping: '',
-    quantity: '', 
+    shipping: 'yes',
+    quantity: '150', 
     images: [],
     colors: ["Black", "Brown", "Silver", "White", "Blue"], 
     brands: ["Apple", "HP", "Nokia", "Yamaha", "Microsoft"], 
@@ -38,6 +38,8 @@ const ProductCreate = () => {
         createProduct(values, user.token)
         .then(res => {
             console.log(res)
+            window.alert(`"${res.data.title}" is created`)
+            window.location.reload()
         })
         .catch(err => {
             console.log(err)
