@@ -2,7 +2,7 @@ import React from 'react'
 import Resizer from 'react-image-file-resizer'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
-import { Avatar } from 'antd'
+import { Avatar, Badge } from 'antd'
 
 
 const FileUpload = ({values, setValues, setLoading}) => {
@@ -41,13 +41,43 @@ const FileUpload = ({values, setValues, setLoading}) => {
             }
         }
     }
+    const handleImageRemove = (public_id) => {
+        setLoading(true)
+        console.log(public_id)
+
+        axios.post(`${process.env.REACT_APP_API}/removeimage`, public_id, {
+            headers: {
+                authtoken: user ? user.token : ''
+            }
+        })
+        .then( res => {
+            console.log(res)
+            setLoading(false)
+            const { images } = values
+            let filteredImages = images.filter((item) => {
+                return item.public_id !== public_id
+            })
+
+            setValues({...values, images: filteredImages})
+           
+        })
+        .catch(err => {
+            setLoading(false)
+            console.log('Cloudinary image remove error', err)
+        })
+    }
     return (
         <>
         <div className="row">
             {values.images && values.images.map( image => (
-                <Avatar key={image.publid_id} src={image.url} size={100} className="m-3"/>
+                <Badge
+                style={{cursor: 'pointer'}}
+                count="X" key={image.public_id} onClick={() => handleImageRemove(image.public_id)}>
+                    <Avatar src={image.url} size={100} shape="square" className="ml-3 mb-3"/>
+                </Badge>
             ))}
         </div>
+        
          <div className="row">
             <label className="btn btn-primary">Choose Files
                 <input type="file" multiple accept="images/*" hidden onChange={fileUploadAndResize} />
