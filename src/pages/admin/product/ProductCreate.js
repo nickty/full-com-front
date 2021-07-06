@@ -5,6 +5,8 @@ import { toast } from 'react-toastify'
 import AdminNav from '../../../components/nav/AdminNav'
 import { createProduct } from '../../../functions/product'
 import ProductCreateForm from '../../../components/forms/ProductCreateForm'
+import { useEffect } from 'react'
+import { getCategories } from '../../../functions/category'
 
 const initialState = {
     title: 'Mackbook',
@@ -32,6 +34,12 @@ const ProductCreate = () => {
             ...values, [e.target.name] : e.target.value
         })
     }
+
+    useEffect(()=>{
+        loadCategories()
+    }, [])
+
+    const loadCategories = () => getCategories().then(c => setValues({...values, categories: c.data}))
 
     const handleSubmit = e => {
         e.preventDefault()

@@ -12,6 +12,16 @@ const ProductCreateForm = ({handleChange, handleSubmit, values}) => {
                             <input onChange={handleChange} type="text" name="description" value={values.description} className="form-control" />
                         </div>
                         <div className="form-group">
+                            <label for="category">Category</label>
+                            <select name="category" className="form-control" onChange={handleChange}>
+                                <option disabled>Select Category</option>
+                                {values.categories.length > 0 && values.categories.map((cat) => (
+                                    <option value={cat._id} key={cat._id}>{cat.name}</option>
+                                ))}
+                                
+                            </select>
+                        </div>
+                        <div className="form-group">
                             <label for="shipping">Price</label>
                             <input onChange={handleChange} type="text" name="price" value={values.price} className="form-control" />
                         </div>
