@@ -40,13 +40,14 @@ const ProductCreate = () => {
     const handleCategoryChange = e => {
         e.preventDefault()
         console.log('click', e.target.value)
-        setValues({...values, [e.target.name] : e.target.value})
+        setValues({...values, subs: [], [e.target.name] : e.target.value})
 
         getCategorySubs(e.target.value)
         .then(res => {
             setSubOptions(res.data)
             console.log(res.data)
         })
+        setShowSubs(true)
     }
 
     useEffect(()=>{

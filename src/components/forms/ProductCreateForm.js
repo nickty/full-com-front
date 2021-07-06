@@ -25,7 +25,7 @@ const ProductCreateForm = ({setValues, handleChange, handleSubmit, values, handl
                                 
                             </select>
                         </div>
-                        <div className="form-group">
+                       { showSubs && <div className="form-group">
                             <label for="category">Sub Category</label>
                            <Select
                             mode="multiple"
@@ -39,7 +39,7 @@ const ProductCreateForm = ({setValues, handleChange, handleSubmit, values, handl
                                ))}
                                
                            </Select>
-                        </div>
+                        </div>}
                         <div className="form-group">
                             <label for="shipping">Price</label>
                             <input onChange={handleChange} type="text" name="price" value={values.price} className="form-control" />
