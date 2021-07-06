@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import AdminProductCard from '../../components/cards/AdminProductCard'
 import AdminNav from '../../components/nav/AdminNav'
 import { getProductsByCount } from '../../functions/product'
 
@@ -33,6 +34,12 @@ const AdminDashboard = () => {
                 </div>
                 <div className="col">
                     {loading ? (<h4 className="text-danger">Loading...</h4>) : (<h4>All Products</h4>)}
+
+                    <div className="row">
+                        {products.map(product => (
+                            <AdminProductCard product={product} key={product._id} />
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>
