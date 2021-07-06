@@ -84,6 +84,7 @@ const ProductCreate = () => {
                    handleCategoryChange={handleCategoryChange}
                    subOptions={subOptions}
                    showSubs={showSubs}
+                   setValues={setValues}
                    />
 
 
