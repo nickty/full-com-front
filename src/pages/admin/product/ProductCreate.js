@@ -7,6 +7,7 @@ import { createProduct } from '../../../functions/product'
 import ProductCreateForm from '../../../components/forms/ProductCreateForm'
 import { useEffect } from 'react'
 import { getCategories, getCategorySubs } from '../../../functions/category'
+import FileUpload from '../../../components/forms/FileUpload'
 
 const initialState = {
     title: 'Mackbook',
@@ -80,6 +81,10 @@ const ProductCreate = () => {
                 <div className="col-md-10">
                     <h4>Create Product</h4>
                     <hr />
+
+                    <div className="p-3">
+                        <FileUpload />
+                    </div>
 
                    <ProductCreateForm handleSubmit={handleSubmit} handleChange={handleChange} values={values}
                    handleCategoryChange={handleCategoryChange}
