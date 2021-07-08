@@ -10,13 +10,11 @@ import { getCategories, getCategorySubs } from '../../../functions/category'
 import FileUpload from '../../../components/forms/FileUpload'
 
 
-const ProductUpdate = () => {
+const ProductUpdate = ({match}) => {
 
     const {user} = useSelector(state => state)
 
-    
-
-   
+    const { slug } = match.params
 
    
     return (
@@ -29,7 +27,7 @@ const ProductUpdate = () => {
                     <h4>Update Product</h4>
                     <hr />
 
-                    
+                    {JSON.stringify(slug)}
 
                 </div>
             </div>
