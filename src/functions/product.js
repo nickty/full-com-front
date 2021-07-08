@@ -18,3 +18,7 @@ export const removeProduct = async (slug, authtoken) =>{
 export const getProductsByCount = async (count) =>{
     return await axios.get(`${process.env.REACT_APP_API}/products/${count}`)
 }
+
+export const getProduct = async (slug) =>{
+    return await axios.get(`${process.env.REACT_APP_API}/product/${slug}`)
+}

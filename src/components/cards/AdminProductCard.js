@@ -1,5 +1,5 @@
 import React from 'react'
-import product from '../../images/product.png'
+import productImage from '../../images/product.png'
 import { Card } from 'antd'
 import { EditOutlined, DeleteOutlined} from '@ant-design/icons'
 import { Link } from 'react-router-dom'
@@ -12,7 +12,7 @@ const AdminProductCard = ({product, handleRemove}) => {
     return (
         <div>
             <Card cover={
-                <img src={images && images.length ? images[0].url : product } style={{height: "150px", objectFit: "cover"}} />
+                <img src={images && images.length ? images[0].url : productImage } style={{height: "150px", objectFit: "cover"}} />
             }
             actions={[
                 <Link to={`/admin/product/${slug}`}><EditOutlined className="text-info" /></Link>, <DeleteOutlined onClick={() => handleRemove(slug)} className="text-warning"/>
