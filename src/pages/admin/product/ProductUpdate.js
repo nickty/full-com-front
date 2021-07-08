@@ -30,6 +30,7 @@ const ProductUpdate = ({match}) => {
     const [values, setValues] = useState(initialState)
     const [ subOptions, setSubOptions ] = useState([])
     const [ categories, setCategories ] = useState([])
+    const [ arrayObSubIds, setArrayObSubIds ] = useState([])
 
     const {user} = useSelector(state => state)
 
@@ -45,6 +46,17 @@ const ProductUpdate = ({match}) => {
         .then(p => {
             // console.log(p)
             setValues({...values, ...p.data})
+
+            getCategorySubs(p.data.category._id)
+            .then(res => {
+                setSubOptions(res.data)
+            })
+            let arr =[]
+            p.data.subs.map(s => {
+                arr.push(s._id)
+            })
+            console.log(arr)
+            setArrayObSubIds(prev => arr)
         })
     }
 
@@ -95,6 +107,8 @@ const ProductUpdate = ({match}) => {
                     values={values}
                     categories={categories}
                     subOptions={subOptions}
+                    arrayObSubIds={arrayObSubIds}
+                    setArrayObSubIds={setArrayObSubIds}
                     />
 
                 </div>
