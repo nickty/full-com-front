@@ -42,7 +42,7 @@ const ProductCreate = () => {
     const handleCategoryChange = e => {
         e.preventDefault()
         console.log('click', e.target.value)
-        setValues({...values, subs: [], [e.target.name] : e.target.value})
+        setValues({...values, subs: [], category : e.target.value})
 
         getCategorySubs(e.target.value)
         .then(res => {

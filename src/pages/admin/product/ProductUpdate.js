@@ -28,6 +28,8 @@ const initialState = {
 const ProductUpdate = ({match}) => {
 
     const [values, setValues] = useState(initialState)
+    const [ subOptions, setSubOptions ] = useState([])
+    const [ categories, setCategories ] = useState([])
 
     const {user} = useSelector(state => state)
 
@@ -35,7 +37,8 @@ const ProductUpdate = ({match}) => {
 
     useEffect(() => {
         loadingProduct()
-    }, [])
+        loadCategories()
+    }, [slug])
 
     const loadingProduct = () => {
         getProduct(slug)
@@ -45,6 +48,10 @@ const ProductUpdate = ({match}) => {
         })
     }
 
+    const loadCategories = () => getCategories().then(c => {
+        setCategories(c.data)
+    })
+
     const handleChange =(e) =>{
         
         setValues({...values, [e.target.name] : e.target.value})
@@ -53,6 +60,19 @@ const ProductUpdate = ({match}) => {
 
     const handleSubmit = () => {
         
+    }
+
+    const handleCategoryChange = e => {
+        e.preventDefault()
+        console.log('click', e.target.value)
+        setValues({...values, subs: [], category : e.target.value})
+
+        getCategorySubs(e.target.value)
+        .then(res => {
+            setSubOptions(res.data)
+            console.log(res.data)
+        })
+     
     }
    
     return (
@@ -68,10 +88,13 @@ const ProductUpdate = ({match}) => {
                     {JSON.stringify(values)}
 
                     <ProductUpdateForm 
+                    handleCategoryChange = {handleCategoryChange}
                     handleChange={handleChange}
                     handleSubmit={handleSubmit}
                     setValues={setValues}
                     values={values}
+                    categories={categories}
+                    subOptions={subOptions}
                     />
 
                 </div>

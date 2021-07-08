@@ -2,7 +2,7 @@ import React from 'react'
 import { Select } from 'antd'
 const { Option } = Select
 
-const ProductUpdateForm = ({setValues, handleChange, handleSubmit, values}) => {
+const ProductUpdateForm = ({categories, subOptions,setValues, handleChange, handleSubmit, values, handleCategoryChange}) => {
 
     const subs = values.subs
     return (
@@ -29,6 +29,18 @@ const ProductUpdateForm = ({setValues, handleChange, handleSubmit, values}) => {
                                 
                             </select>
                         </div>
+
+                        <div className="form-group">
+                            <label for="category">Category</label>
+                            <select name="category" className="form-control" onChange={handleCategoryChange}>
+                                <option disabled>Select Category</option>
+                                {categories.length > 0 && categories.map((cat) => (
+                                    <option value={cat._id} key={cat._id}>{cat.name}</option>
+                                ))}
+                                
+                            </select>
+                        </div>
+
                         <div className="form-group">
                             <label for="description">Quantity</label>
                             <input onChange={handleChange} type="number" name="quantity" value={values.quantity} className="form-control" />
