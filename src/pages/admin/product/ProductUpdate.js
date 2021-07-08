@@ -7,6 +7,7 @@ import { getProduct } from '../../../functions/product'
 import { useEffect } from 'react'
 import { getCategories, getCategorySubs } from '../../../functions/category'
 import FileUpload from '../../../components/forms/FileUpload'
+import ProductUpdateForm from '../../../components/forms/ProductUpdateForm'
 
 const initialState = {
     title: '',
@@ -43,6 +44,16 @@ const ProductUpdate = ({match}) => {
             setValues({...values, ...p.data})
         })
     }
+
+    const handleChange =(e) =>{
+        
+        setValues({...values, [e.target.name] : e.target.value})
+
+    }
+
+    const handleSubmit = () => {
+        
+    }
    
     return (
         <div className="container-fluid">
@@ -55,6 +66,13 @@ const ProductUpdate = ({match}) => {
                     <hr />
 
                     {JSON.stringify(values)}
+
+                    <ProductUpdateForm 
+                    handleChange={handleChange}
+                    handleSubmit={handleSubmit}
+                    setValues={setValues}
+                    values={values}
+                    />
 
                 </div>
             </div>
