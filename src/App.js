@@ -25,6 +25,7 @@ import SubUpdate from './pages/admin/sub/SubUpdate';
 import ProductCreate from './pages/admin/product/ProductCreate';
 import AllProducts from './pages/admin/product/AllProducts';
 import ProductUpdate from './pages/admin/product/ProductUpdate';
+import Product from './pages/Product';
 
 
 function App() {
@@ -85,6 +86,8 @@ function App() {
           <AdminRoute path="/admin/product" exact component={ProductCreate} />
           <AdminRoute path="/admin/products" exact component={AllProducts} />
           <AdminRoute path="/admin/product/:slug" exact component={ProductUpdate} />
+
+          <Route path="/product/:slug" exact component={Product} />
         </Switch>
   </>    
     
