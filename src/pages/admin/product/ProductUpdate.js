@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import AdminNav from '../../../components/nav/AdminNav'
-import { getProduct } from '../../../functions/product'
+import { getProduct, updateProduct } from '../../../functions/product'
 import { useEffect } from 'react'
 import { getCategories, getCategorySubs } from '../../../functions/category'
 import FileUpload from '../../../components/forms/FileUpload'
@@ -25,7 +25,7 @@ const initialState = {
     brand: ''
     }
 
-const ProductUpdate = ({match}) => {
+const ProductUpdate = ({match, history}) => {
 
     const [values, setValues] = useState(initialState)
     const [ subOptions, setSubOptions ] = useState([])
@@ -72,8 +72,23 @@ const ProductUpdate = ({match}) => {
 
     }
 
-    const handleSubmit = () => {
-        
+    const handleSubmit = (e) => {
+        e.preventDefault(); 
+        setLoading(true)
+
+        values.subs = arrayObSubIds
+        values.category = selectedCategory ? selectedCategory : values.category 
+
+        updateProduct(slug, values, user.token)
+        .then(res => {
+            setLoading(false)
+            toast.success(`"${res.data.title}" is updated`)
+            history.push("/admin/products")
+        })
+        .catch(err => {
+            setLoading(false)
+            if(err.response.status === 400) toast.error(err.response.data)
+        })
     }
 
     const handleCategoryChange = e => {
@@ -107,7 +122,7 @@ const ProductUpdate = ({match}) => {
                     <h4>Update Product</h4>
                     <hr />
 
-                    {JSON.stringify(values)}
+                    {/* {JSON.stringify(values)} */}
                     <div className="p-3">
                         <FileUpload values={values} setValues={setValues} setLoading={setLoading} />
                     </div>
