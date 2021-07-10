@@ -1,19 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import LoadingCard from '../cards/LoadingCard'
 import ProductCard from '../cards/ProductCard'
-import { getProducts } from '../../functions/product'
+import { getProducts, getProductsCount } from '../../functions/product'
+import { Pagination } from 'antd'
 
 const NewArrivals = () => {
     const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(false)
+    const [page, setPage] = useState(1)
+    const [productsCount, setProductsCount] = useState(0)
 
     useEffect(() => {
         loadingAllProducts()
+       
+    }, [page])
+
+    useEffect(() => {
+        getProductsCount().then(res => setProductsCount(res.data))
     }, [])
 
     const loadingAllProducts = () => {
         setLoading(true)
-        getProducts('createdAt', 'desc', 3).then((res) => {
+        getProducts('createdAt', 'desc', page).then((res) => {
             setProducts(res.data)
             setLoading(false)
         })
@@ -31,6 +39,13 @@ const NewArrivals = () => {
                         ))}
                     </div>
                 )}
+                
+             </div>
+             <div className="row">
+                <nav className="col-md-4 offset-md-4 text-center pt-5 p-3">
+                <Pagination current={page} total={(productsCount / 3) * 10} onChange={value => setPage(value)} />
+                </nav>
+                
              </div>
             
         </div>
