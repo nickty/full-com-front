@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import Jumbotron from '../components/cards/Jumbotron'
 import ProductCard from '../components/cards/ProductCard'
 import { getProductsByCount } from '../functions/product'
 
@@ -19,12 +20,17 @@ const Home = () => {
     }
     return (
         <div>
+            <div className="jumbotron text-danger h1 font-weight-bold text-center">
+            <Jumbotron text={['New Arrivals', 'Best Sellers', 'Latest Products']} />
+            </div>
+            
+
              {loading ? (<h4 className="text-danger">Loading</h4>) : (<h4>All Products</h4>) }
              <div className="container">
                  <div className="row">
                     {products.map(p => (
                         <div className="col-md-4">
-                            <ProductCard key={p._id} product = {p}/>
+                            <ProductCard key={p._id} product={p}/>
                         </div>
                     ))}
                  </div>
