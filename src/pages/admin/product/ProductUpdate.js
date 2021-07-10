@@ -31,6 +31,8 @@ const ProductUpdate = ({match}) => {
     const [ subOptions, setSubOptions ] = useState([])
     const [ categories, setCategories ] = useState([])
     const [ arrayObSubIds, setArrayObSubIds ] = useState([])
+    const [ selectedCategory, setSelectedCategory ] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const {user} = useSelector(state => state)
 
@@ -77,13 +79,21 @@ const ProductUpdate = ({match}) => {
     const handleCategoryChange = e => {
         e.preventDefault()
         console.log('click', e.target.value)
-        setValues({...values, subs: [], category : e.target.value})
+        setValues({...values, subs: []})
+
+        setSelectedCategory(e.target.value)
 
         getCategorySubs(e.target.value)
         .then(res => {
             setSubOptions(res.data)
             console.log(res.data)
         })
+
+        if(values.category._id === e.target.value){
+            loadingProduct();
+        }
+
+        setArrayObSubIds([])
      
     }
    
@@ -98,6 +108,9 @@ const ProductUpdate = ({match}) => {
                     <hr />
 
                     {JSON.stringify(values)}
+                    <div className="p-3">
+                        <FileUpload values={values} setValues={setValues} setLoading={setLoading} />
+                    </div>
 
                     <ProductUpdateForm 
                     handleCategoryChange = {handleCategoryChange}
@@ -109,6 +122,7 @@ const ProductUpdate = ({match}) => {
                     subOptions={subOptions}
                     arrayObSubIds={arrayObSubIds}
                     setArrayObSubIds={setArrayObSubIds}
+                    selectedCategory={selectedCategory}
                     />
 
                 </div>

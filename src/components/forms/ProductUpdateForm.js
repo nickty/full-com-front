@@ -1,8 +1,9 @@
 import React from 'react'
 import { Select } from 'antd'
+import { getCategory } from '../../functions/category'
 const { Option } = Select
 
-const ProductUpdateForm = ({arrayObSubIds, setArrayObSubIds, categories, subOptions,setValues, handleChange, handleSubmit, values, handleCategoryChange}) => {
+const ProductUpdateForm = ({selectedCategory,arrayObSubIds, setArrayObSubIds, categories, category, subOptions,setValues, handleChange, handleSubmit, values, handleCategoryChange}) => {
 
     const subs = values.subs
     return (
@@ -32,8 +33,8 @@ const ProductUpdateForm = ({arrayObSubIds, setArrayObSubIds, categories, subOpti
 
                         <div className="form-group">
                             <label for="category">Category</label>
-                            <select name="category" className="form-control" onChange={handleCategoryChange}>
-                                <option disabled>Select Category</option>
+                            <select value={selectedCategory ? selectedCategory : values.category._id} name="category" className="form-control" onChange={handleCategoryChange}>
+                                
                                 {categories.length > 0 && categories.map((cat) => (
                                     <option value={cat._id} key={cat._id}>{cat.name}</option>
                                 ))}
