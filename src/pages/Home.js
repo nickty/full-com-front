@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Jumbotron from '../components/cards/Jumbotron'
+import LoadingCard from '../components/cards/LoadingCard'
 import ProductCard from '../components/cards/ProductCard'
 import { getProductsByCount } from '../functions/product'
 
@@ -27,13 +28,16 @@ const Home = () => {
 
              {loading ? (<h4 className="text-danger">Loading</h4>) : (<h4>All Products</h4>) }
              <div className="container">
-                 <div className="row">
-                    {products.map(p => (
-                        <div className="col-md-4">
-                            <ProductCard key={p._id} product={p}/>
-                        </div>
-                    ))}
-                 </div>
+
+                {loading ? <LoadingCard count={3} /> : (
+                     <div className="row">
+                        {products.map(p => (
+                            <div className="col-md-4">
+                                <ProductCard key={p._id} product={p}/>
+                            </div>
+                        ))}
+                    </div>
+                )}
              </div>
             
         </div>

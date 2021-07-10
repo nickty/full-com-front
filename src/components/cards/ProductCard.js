@@ -1,6 +1,6 @@
 import React from 'react'
 import productImage from '../../images/product.png'
-import { Card } from 'antd'
+import {Card } from 'antd'
 import { EyeOutlined, ShoppingCartOutlined} from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 
