@@ -7,6 +7,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"
 import laptop from '../../images/product.png'
 import ProductListItem from './ProductListItem'
 import StarRating from 'react-star-ratings'
+import RatingModal from '../modal/RatingModal'
 // import 'react-star-rating/dist/css/react-star-rating.min.css'
 
 const { Meta } = Card
@@ -38,20 +39,23 @@ const SingleProduct = ({product}) => {
             <div className="col-md-5">
                 <h1 className="bg-info p-3">{title}</h1>
                 
-                <StarRating
-                    name={_id}
-                    numberOfStars={5}
-                    rating={3}
-                    changeRating={(newRating, name) => console.log(name) }
-                    isSelectable={true}
-                    startRatedColor="green"
-                />
+               
                 <Card
                     actions={[
                         <>
                             <ShoppingCartOutlined className="text-success" /> <br /> Add to cart
                         </>, 
                         <Link to={`/`}><HeartOutlined className="text-info" /> <br /> Add to wishlist</Link>,
+                        <RatingModal>
+                             <StarRating
+                                name={_id}
+                                numberOfStars={5}
+                                rating={3}
+                                changeRating={(newRating, name) => console.log(name) }
+                                isSelectable={true}
+                                startRatedColor="green"
+                            />
+                        </RatingModal>
                     ]}
                 >
                     <ProductListItem product={product} />
