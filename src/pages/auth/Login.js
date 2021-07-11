@@ -21,6 +21,9 @@ const Login = ({ history }) => {
     const { user } = useSelector(state => state)
 
     useEffect(()=>{
+        let intended = history.location.state
+        if(intended) return;
+        
         if(user && user.token){
             history.push('/')
         }
@@ -28,6 +31,12 @@ const Login = ({ history }) => {
 
 
     const roleBasedRedirect = (res) => {
+        //check if intented
+        let intended = history.location.state
+        if(intended){
+            history.push(intended.from)
+        }
+
         if(res.data.role === 'admin'){
             history.push("/admin/dashboard")
         } else {

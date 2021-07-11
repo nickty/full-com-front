@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import { StarOutlined } from '@ant-design/icons'
 import {useSelector} from 'react-redux'
 import { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 
 
 const RatingModal = ({children}) => {
@@ -13,12 +13,16 @@ const RatingModal = ({children}) => {
     const [modalVisible, setModalVisible] = useState(false)
 
     let history = useHistory()
+    let params = useParams()
 
     const handleModal = () => {
         if(user && user.token){
             setModalVisible(true)
         } else {
-            history.push("/login")
+            history.push({
+                pathname: '/login',
+                state: { from: `/product/${params.slug}`}
+            })
         }
     }
 
