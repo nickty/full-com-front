@@ -6,17 +6,19 @@ const Product = ({match}) => {
     const [product, setProduct] = useState({})
 
     const { slug } = match.params
-    useEffect(() => {
-        loadProduct()
-    }, [slug])
 
-    const loadProduct = () =>{
-        getProduct(slug).then(res=> setProduct(res.data))
+    useEffect(() => {
+        loadSingleProduct()
+    }, [slug, match])
+
+    const loadSingleProduct = () => {
+        getProduct(slug).then((res)=> setProduct(res.data))
     }
     return (
         <div className="containter-fluid">
             <div className="row pt-4">
                 <SingleProduct product={product} />
+                {/* {JSON.stringify(product)} */}
             </div>
 
             <div className="row">
