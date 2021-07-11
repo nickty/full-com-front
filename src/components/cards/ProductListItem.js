@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 const ProductListItem = ({product}) => {
 
     const { price, shipping, color, brand, quantity, sold, category, subs } = product;
+   
     return (
         <ul className="list-group">
             <li className="list-group-item">
@@ -11,15 +12,15 @@ const ProductListItem = ({product}) => {
             </li>
             {/* {JSON.stringify(subs)}
             {JSON.stringify(category)} */}
-            <li className="list-group-item">
+            {category && (<li className="list-group-item">
                 Category <Link to={`/category/${category.slug}`} className="float-right">{category.name}</Link>
-            </li>
+            </li>)}
            
            {subs && (
                <li className="list-group-item">
                    Sub Categories
                    {subs.map((s) => (
-                       <Link to={`/sub/${s.slug}}`} className="float-right">
+                       <Link to={`/sub/${s.slug}}`} className="float-right pl-3">
                            {s.name}
                        </Link>
                    ))}

@@ -21,8 +21,13 @@ const Product = ({match}) => {
                 {/* {JSON.stringify(product)} */}
             </div>
 
-            <div className="row">
-                related product
+            <div className="row p-5">
+                <div className="col text-center pt-5 pb-5">
+                    <hr />
+                        <h4>Related Products</h4>
+                        
+                    <hr />
+                </div>
             </div>
            
         </div>
