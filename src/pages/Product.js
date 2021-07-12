@@ -18,7 +18,7 @@ const Product = ({match}) => {
     useEffect(() => {
         if(product.ratings && user) {
             let existingRatingObject = product.ratings.find(el => 
-                el.postedBy.toString() === user._id.toString()
+                el.postedBy == user._id
                 )
 
                 existingRatingObject && setStar(existingRatingObject.star)

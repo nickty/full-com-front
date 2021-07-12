@@ -6,7 +6,7 @@ import NewArrivals from '../components/home/NewArrivals'
 const Home = () => {
    
     return (
-        <div>
+        <>
             <div className="jumbotron text-danger h1 font-weight-bold text-center">
             <Jumbotron text={['New Arrivals', 'Best Sellers', 'Latest Products']} />
             </div>
@@ -21,7 +21,7 @@ const Home = () => {
            
            <BestSellers />
            <br />
-        </div>
+        </>
     )
 }
 
