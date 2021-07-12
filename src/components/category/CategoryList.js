@@ -17,7 +17,7 @@ const CategoryList = () => {
     }, [])
 
     const showCategories = () => categories.map(c => <div key={c._id} className="btn btn-primary m-3">
-        <Link to={`/category/${c.slug}`}>{c.name}</Link>
+        <Link className="text-white" to={`/category/${c.slug}`}>{c.name}</Link>
     </div>)
 
     return (
