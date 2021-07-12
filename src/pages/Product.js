@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import ProductCard from '../components/cards/ProductCard'
 import SingleProduct from '../components/cards/SingleProduct'
-import { getProduct, productStar } from '../functions/product'
+import { getProduct, getRelated, productStar } from '../functions/product'
 
 const Product = ({match}) => {
     const [product, setProduct] = useState({})
     const [star, setStar] = useState(0)
+    const [related, setRalated] = useState([])
 
     const { user } = useSelector(state => state)
 
@@ -36,7 +38,13 @@ const Product = ({match}) => {
     }
 
     const loadSingleProduct = () => {
-        getProduct(slug).then((res)=> setProduct(res.data))
+        getProduct(slug).then((res)=> {
+            setProduct(res.data)
+            //get related
+            getRelated(res.data._id).then(res => {
+                setRalated(res.data)
+            })
+        })
     }
     return (
         <div className="containter-fluid">
@@ -49,9 +57,13 @@ const Product = ({match}) => {
                 <div className="col text-center pt-5 pb-5">
                     <hr />
                         <h4>Related Products</h4>
-    
                     <hr />
                 </div>
+            </div>
+            <div className="row pb-5">
+                {related.length ? related.map((r) => (<div key={r._id} className="col-md-4">
+                    <ProductCard product={r} />
+                </div>)) : <div className="text-center">No related product found</div>}
             </div>
            
         </div>
