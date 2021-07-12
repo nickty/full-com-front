@@ -49,7 +49,7 @@ const Product = ({match}) => {
                 <div className="col text-center pt-5 pb-5">
                     <hr />
                         <h4>Related Products</h4>
-                        
+    
                     <hr />
                 </div>
             </div>
