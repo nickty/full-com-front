@@ -13,7 +13,7 @@ import RatingModal from '../modal/RatingModal'
 const { Meta } = Card
 const { TabPane } = Tabs
 
-const SingleProduct = ({product}) => {
+const SingleProduct = ({product, onStartClick, star}) => {
 
     const { title, images, description, _id } = product
 
@@ -50,8 +50,8 @@ const SingleProduct = ({product}) => {
                              <StarRating
                                 name={_id}
                                 numberOfStars={5}
-                                rating={3}
-                                changeRating={(newRating, name) => console.log(name) }
+                                rating={star}
+                                changeRating={onStartClick}
                                 isSelectable={true}
                                 startRatedColor="green"
                             />
