@@ -19,8 +19,8 @@ const ProductListItem = ({product}) => {
            {subs && (
                <li className="list-group-item">
                    Sub Categories
-                   {subs.map((s) => (
-                       <Link to={`/sub/${s.slug}}`} className="float-right pl-3">
+                   {subs.map(s => (
+                       <Link to={`/sub/${s.slug}`} className="float-right pl-3">
                            {s.name}
                        </Link>
                    ))}
