@@ -1,6 +1,6 @@
 import React from 'react'
 import { Menu } from 'antd'
-import { UserAddOutlined, AppstoreOutlined, SettingFilled, LoginOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons'
+import { UserAddOutlined, AppstoreOutlined, SettingFilled, LoginOutlined, UserOutlined, LogoutOutlined, ShopOutlined } from '@ant-design/icons'
 import { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import firebase from 'firebase'
@@ -42,7 +42,9 @@ const Header = () => {
               <Link to="">Home</Link> 
             </Item>
 
-                     
+            <Item key="shop" icon={<ShopOutlined /> }>
+              <Link to="/shop">Shop</Link> 
+            </Item>     
 
            
 
