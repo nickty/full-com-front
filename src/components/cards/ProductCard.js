@@ -11,7 +11,7 @@ const { Meta } = Card
 
 const ProductCard = ({product}) => {
 
-    const { title, description, images, slug } = product
+    const { title, description, price, images, slug } = product
     return (
        <>
        {product && product.ratings && product.ratings.length > 0 ? 
@@ -23,7 +23,7 @@ const ProductCard = ({product}) => {
             <Link to={`/product/${slug}`}><EyeOutlined className="text-info" /> <br/> View Product</Link>, <><ShoppingCartOutlined className="text-warning"/> <br/> Add to cart</>
         ]}
         >
-            <Meta title={title} description={`${description && description.substring(0, 40)}...`} />
+            <Meta title={`${title} $${price}`} description={`${description && description.substring(0, 40)}...`} />
         </Card>
         </>
 
