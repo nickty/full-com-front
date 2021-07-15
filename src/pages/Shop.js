@@ -3,9 +3,9 @@ import { fetchProductByFilter, getProductsByCount } from '../functions/product'
 import { getCategories } from '../functions/category'
 import ProductCard from '../components/cards/ProductCard'
 import { useDispatch, useSelector } from 'react-redux'
-import { Menu, Slider, Checkbox } from 'antd'
+import { Menu, Slider, Checkbox, Radio } from 'antd'
 import { getSubs } from '../functions/sub'
-import { DollarOutlined, DownSquareOutlined, StarOutlined } from '@ant-design/icons'
+import { DollarOutlined, DownSquareOutlined, RadiusUpleftOutlined, StarOutlined } from '@ant-design/icons'
 import Star from '../components/forms/Star'
 
 const Shop = () => {
@@ -16,6 +16,9 @@ const Shop = () => {
     const [categories, setCategories] = useState([])
     const [subs, setSubs] = useState([])
     const [sub, setSub] = useState('')
+
+    const [brands, setBrands] = useState(["Apple", "HP", "Nokia", "Yamaha", "Microsoft"])
+    const [brand, setBrand] = useState('')
 
     const [star, setStar] = useState('')
 
@@ -76,6 +79,7 @@ const Shop = () => {
         setPrice(value)
         setStar("")
         setSub('')
+        setBrand('')
         setTimeout(() => {
            setOk(!ok) 
         }, 300);
@@ -99,6 +103,7 @@ const Shop = () => {
         })
         setPrice([0,0])
         setSub('')
+        setBrand('')
         setStar("")
         // console.log(e.target.value)
         let inTheState = [...categoryIds]
@@ -129,6 +134,7 @@ const Shop = () => {
         setCategoryIds([])
         setStar(num)
         setSub('')
+        setBrand('')
         fetchProducts({stars: num})
     }
     const showStars = () => {
@@ -160,7 +166,26 @@ const Shop = () => {
         setPrice([0,0])
         setCategoryIds([])
         setStar('')
+        setBrand('')
         fetchProducts({sub})
+    }
+
+    //7. show product based on brand name
+    const showBrands = () => brands.map(b => <Radio className="pt-3 pb-3 pl-5 pr-5" value={b} name={b} checked={b===brand} onChange={handleBrand}>{b}</Radio> )
+
+    const handleBrand = (e) => {
+        setSub(sub)
+
+        dispatch({
+            type: "SEARCH_QUERY",
+            payload: {text: ""}
+        })
+        setPrice([0,0])
+        setCategoryIds([])
+        setStar('')
+        setBrand(e.target.value)
+
+        fetchProducts({brand: e.target.value})
     }
 
     return (
@@ -169,7 +194,7 @@ const Shop = () => {
                 <div className="col-md-3 p-2">
                     <h4>Search/Filter</h4>
 
-                    <Menu mode="inline" defaultOpenKeys={["1", "2", "3", "4"]}>
+                    <Menu mode="inline" defaultOpenKeys={["1", "2", "3", "4", "5", "6", "7"]}>
                     
                         <Menu.SubMenu key="1" title={<span className="h6"><DollarOutlined /> Price</span>}>
                             {/* price */}
@@ -178,21 +203,27 @@ const Shop = () => {
                             </div>
                         </Menu.SubMenu>
                         <Menu.SubMenu key="2" title={<span className="h6"><DownSquareOutlined /> Categories</span>}>
-                            {/* Categories */}
+                            
                             <div style={{marginTop: "-10px"}}>
                                 {showCategories()}
                             </div>
                         </Menu.SubMenu>
                         <Menu.SubMenu key="3" title={<span className="h6"><StarOutlined /> Rating</span>}>
-                            {/* Categories */}
+                          
                             <div style={{marginTop: "-10px"}}>
                                 {showStars()}
                             </div>
                         </Menu.SubMenu>
                         <Menu.SubMenu key="4" title={<span className="h6"><DownSquareOutlined /> Sub-Categories</span>}>
-                            {/* Categories */}
+                           
                             <div style={{marginTop: "-10px"}} className="pl-4 pr-4">
                                 {showSubs()}
+                            </div>
+                        </Menu.SubMenu>
+                        <Menu.SubMenu key="5" title={<span className="h6"><DownSquareOutlined /> Brands</span>}>
+                            {/* brands */}
+                            <div style={{marginTop: "-10px"}} className="pr-4">
+                                {showBrands()}
                             </div>
                         </Menu.SubMenu>
                     </Menu>
