@@ -1,6 +1,6 @@
 import React from 'react'
-import { Menu } from 'antd'
-import { UserAddOutlined, AppstoreOutlined, SettingFilled, LoginOutlined, UserOutlined, LogoutOutlined, ShopOutlined, ShoppingOutlined } from '@ant-design/icons'
+import { Badge, Menu } from 'antd'
+import {UserAddOutlined, AppstoreOutlined, SettingFilled, LoginOutlined, UserOutlined, LogoutOutlined, ShopOutlined, ShoppingOutlined, ShoppingCartOutlined } from '@ant-design/icons'
 import { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import firebase from 'firebase'
@@ -15,7 +15,7 @@ const Header = () => {
     let dispatch = useDispatch();
    
 
-    const {user} = useSelector(state => state)
+    const {user, cart} = useSelector(state => state)
 
      const history = useHistory();
 
@@ -44,6 +44,10 @@ const Header = () => {
 
             <Item key="shop" icon={<ShoppingOutlined /> }>
               <Link to="/shop">Shop</Link> 
+            </Item>     
+
+            <Item key="cart" icon={<ShoppingCartOutlined /> }>
+              <Link to="/cart"><Badge count={cart.length} offset={[9,0]}>Cart</Badge></Link> 
             </Item>     
 
            
