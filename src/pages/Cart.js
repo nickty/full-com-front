@@ -20,7 +20,7 @@ const Cart = () => {
     }
 
     const showCartItems = () => {
-        return <table className="table table-bordered table-responsive">
+        return <table className="table table-bordered">
             <thead className="thead-light">
             <tr>
                 <th scope="col">Image</th>
