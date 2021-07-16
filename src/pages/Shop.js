@@ -210,7 +210,7 @@ const Shop = () => {
                         </Menu.SubMenu>
                         <Menu.SubMenu key="3" title={<span className="h6"><StarOutlined /> Rating</span>}>
                           
-                            <div style={{marginTop: "-10px"}}>
+                            <div style={{marginTop: "-10px"}} className="pt-2">
                                 {showStars()}
                             </div>
                         </Menu.SubMenu>
