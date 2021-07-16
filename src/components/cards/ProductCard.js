@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import productImage from '../../images/product.png'
-import {Card } from 'antd'
+import {Card, Tooltip } from 'antd'
 import { EyeOutlined, ShoppingCartOutlined} from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import { showAverage } from '../../functions/rating'
@@ -8,9 +8,11 @@ import _ from 'lodash'
 
 
 
+
 const { Meta } = Card
 
 const ProductCard = ({product}) => {
+    const [tooltip, setTooltip] = useState('Click to add to cart')
 
     const { title, description, price, images, slug } = product
 
@@ -34,6 +36,7 @@ const ProductCard = ({product}) => {
             // console.log('unique', unique)
             localStorage.setItem('cart', JSON.stringify(unique))
 
+            setTooltip('Already Added')
         }
     }
     return (
@@ -44,7 +47,7 @@ const ProductCard = ({product}) => {
             <img src={images && images.length ? images[0].url : productImage } style={{height: "150px", objectFit: "cover"}} />
         }
         actions={[
-            <Link to={`/product/${slug}`}><EyeOutlined className="text-info" /> <br/> View Product</Link>, <a onClick={handleAddtocart}><ShoppingCartOutlined className="text-warning"/> <br/> Add to cart</a>
+            <Link to={`/product/${slug}`}><EyeOutlined className="text-info" /> <br/> View Product</Link>,<Tooltip title={tooltip}> <a onClick={handleAddtocart}><ShoppingCartOutlined className="text-warning"/> <br/> Add to cart</a></Tooltip>
         ]}
         >
             <Meta title={`${title} $${price}`} description={`${description && description.substring(0, 40)}...`} />
