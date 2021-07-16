@@ -1,5 +1,5 @@
-import React from 'react'
-import { Card, Tabs } from 'antd'
+import React, { useState } from 'react'
+import { Card, Tabs, Tooltip } from 'antd'
 import { Link } from 'react-router-dom'
 import { HeartOutlined, ShoppingCartOutlined} from '@ant-design/icons' 
 import { Carousel } from 'react-responsive-carousel'
@@ -8,7 +8,9 @@ import laptop from '../../images/product.png'
 import ProductListItem from './ProductListItem'
 import StarRating from 'react-star-ratings'
 import RatingModal from '../modal/RatingModal'
-// import 'react-star-rating/dist/css/react-star-rating.min.css'
+import _ from 'lodash'
+import { useDispatch, useSelector } from 'react-redux'
+
 
 import { showAverage } from '../../functions/rating'
 
@@ -16,8 +18,43 @@ const { Meta } = Card
 const { TabPane } = Tabs
 
 const SingleProduct = ({product, onStartClick, star}) => {
+    const [tooltip, setTooltip] = useState('Click to add to cart')
+
+    //redux
+    const {user, cart} = useSelector(state => state)
+    const dispatch = useDispatch()
 
     const { title, images, description, _id } = product
+
+    const handleAddtocart = () => {
+        //create cart array
+        let cart = []
+        if(typeof window !== 'undefined'){
+            //if cart is in localStorage GET it
+            if(localStorage.getItem('cart')){
+                cart = JSON.parse(localStorage.getItem('cart'))
+            }
+            // push new product to cart 
+            cart.push({
+                ...product,
+                count: 1
+            })
+            //remove duplicates
+            let unique = _.unionWith(cart, _.isEqual)
+
+            //save to local strorage
+            // console.log('unique', unique)
+            localStorage.setItem('cart', JSON.stringify(unique))
+
+            setTooltip('Already Added')
+
+            //add to redux state
+            dispatch({
+                type: "ADD_TO_CART",
+                payload: unique
+            })
+        }
+    }
 
     return (
         <>
@@ -45,7 +82,7 @@ const SingleProduct = ({product, onStartClick, star}) => {
                 <Card
                     actions={[
                         <>
-                            <ShoppingCartOutlined className="text-success" /> <br /> Add to cart
+                            <Tooltip title={tooltip}> <a onClick={handleAddtocart}><ShoppingCartOutlined className="text-warning"/> <br/> Add to cart</a></Tooltip>
                         </>, 
                         <Link to={`/`}><HeartOutlined className="text-info" /> <br /> Add to wishlist</Link>,
                         <RatingModal>

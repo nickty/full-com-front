@@ -5,14 +5,17 @@ import { EyeOutlined, ShoppingCartOutlined} from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import { showAverage } from '../../functions/rating'
 import _ from 'lodash'
-
-
+import { useDispatch, useSelector } from 'react-redux'
 
 
 const { Meta } = Card
 
 const ProductCard = ({product}) => {
     const [tooltip, setTooltip] = useState('Click to add to cart')
+
+    //redux
+    const {user, cart} = useSelector(state => state)
+    const dispatch = useDispatch()
 
     const { title, description, price, images, slug } = product
 
@@ -37,6 +40,12 @@ const ProductCard = ({product}) => {
             localStorage.setItem('cart', JSON.stringify(unique))
 
             setTooltip('Already Added')
+
+            //add to redux state
+            dispatch({
+                type: "ADD_TO_CART",
+                payload: unique
+            })
         }
     }
     return (
