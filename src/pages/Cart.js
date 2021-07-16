@@ -14,6 +14,10 @@ const Cart = () => {
         }, 0)
     }
 
+    const saveOrderToDb = () => {
+
+    }
+
     return (
         <div className="container-fluid">
           
@@ -41,9 +45,14 @@ const Cart = () => {
 
                         {
                             user ? (
-                                <button className="btn btn-sm btn-primary mt-2">Procced to checkout</button>
+                                <button disabled={!cart.length} onClick={saveOrderToDb} className="btn btn-sm btn-primary mt-2">Procced to checkout</button>
                             ) : (
-                                <button className="btn btn-sm btn-primary mt-2">Login to checkout</button>
+                                <button className="btn btn-sm btn-primary mt-2">
+                                    <Link className="text-white" to={{
+                                        pathname: "/login",
+                                        state: { from: "cart"}
+                                    }}>Login to checkout</Link>
+                                </button>
                             )
                         }
                 </div>

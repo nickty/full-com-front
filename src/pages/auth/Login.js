@@ -37,7 +37,7 @@ const Login = ({ history }) => {
             history.push(intended.from)
         }
 
-        if(res.data.role === 'admin'){
+        if(res.data.role === "admin"){
             history.push("/admin/dashboard")
         } else {
             history.push("/user/history")
