@@ -29,6 +29,7 @@ import Product from './pages/Product';
 import CategoryHome from './pages/category/CategoryHome';
 import SubHome from './pages/sub/SubHome';
 import Shop from './pages/Shop';
+import Cart from './pages/Cart';
 
 
 function App() {
@@ -95,6 +96,7 @@ function App() {
           <Route path="/category/:slug" exact component={CategoryHome} />
           <Route path="/sub/:slug" exact component={SubHome} />
           <Route path="/shop" exact component={Shop} />
+          <Route path="/cart" exact component={Cart} />
         </Switch>
   </>    
     
