@@ -3,6 +3,7 @@ import ModalImage from 'react-modal-image'
 import { useDispatch } from 'react-redux'
 import laptop from '../../images/product.png'
 import { toast } from 'react-toastify'
+import { CheckCircleOutlined } from '@ant-design/icons'
 
 const ProductCartInCheckout = ({p}) => {
     const dispatch = useDispatch()
@@ -83,7 +84,9 @@ const ProductCartInCheckout = ({p}) => {
                 <td className="text-center">
                     <input onChange={handleQuantityChange} type="number" className="form-control" name="" value={p.count} />
                 </td>
-                <td>shipping</td>
+                <td className="text-center">
+                    {p.shipping === "yes" ? <CheckCircleOutlined className="text-success" /> : <CheckCircleOutlined className="text-danger" />}
+                </td>
                 <td>Delete</td>
             </tr>
         </tbody>
