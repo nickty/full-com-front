@@ -31,6 +31,7 @@ import CategoryHome from './pages/category/CategoryHome';
 import SubHome from './pages/sub/SubHome';
 import Shop from './pages/Shop';
 import Cart from './pages/Cart';
+import Checkout from './pages/Checkout';
 
 
 
@@ -82,6 +83,8 @@ function App() {
           <UserRoute path="/user/history" exact component={History} />
           <UserRoute path="/user/password" exact component={Password} />
           <UserRoute path="/user/wishlist" exact component={Wishlist} />
+          
+          <UserRoute path="/checkout" exact component={Checkout} />
 
           <AdminRoute path="/admin/dashboard" exact component={AdminDashboard} />
           <AdminRoute path="/admin/category" exact component={CategoryCreate} />
