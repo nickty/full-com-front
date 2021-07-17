@@ -13,7 +13,7 @@ const Checkout = () => {
     useEffect(() => {
        getUserCart(user.token)
        .then( res => {
-        //    console.log('user  cart res', res.data)
+           console.log('user  cart res', res.data)
 
         setProducts(res.data.products)
         setTotal(res.data.cartTotal)
@@ -36,12 +36,17 @@ const Checkout = () => {
             </div>
             <div className="col-md-6">
                 <h4>Order Summary</h4>
-                {JSON.stringify(products)}
+                 <hr />
+                <p>Products {products.length}</p>
                 <hr />
-                <p>Products x</p>
+                {products.map((p,i)=> (
+                    <div key={i}>
+                        <p>{p.product.title} ({p.color}) x ({p.count}) = {p.product.price * p.count}</p>
+                    </div>
+                ))}
                 <hr />
-                <p>List of Products</p>
-                <p>Cart total: $x</p>
+                <p>Cart Total: {total}</p>
+               
 
                 <div className="row">
                     <div className="col-md-6">
