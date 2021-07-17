@@ -1,10 +1,11 @@
+import { DeleteOutlined } from '@ant-design/icons'
 import React, { useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import AdminNav from '../../components/nav/AdminNav'
-import { createCoupon } from '../../functions/coupon'
+import { createCoupon, getCoupons, removeCoupon } from '../../functions/coupon'
 
 const CreateCouponPage = () => {
     const [name, setName] = useState('')
@@ -12,11 +13,13 @@ const CreateCouponPage = () => {
     const [discount, setDiscount] = useState('')
     const [loading, setLoading] = useState(false)
 
+    const [coupon, setCoupon] = useState([])
+
     const { user } = useSelector(state => state)
-    const dispatch = useDispatch()
 
     useEffect(() => {
         
+        getCoupons().then(res => setCoupon(res.data))
        
     }, [])
 
@@ -30,12 +33,22 @@ const CreateCouponPage = () => {
           setDiscount('')
           setExpiry('')
           toast.success(`"${res.data.name}" is is created`)
+          getCoupons().then(res => setCoupon(res.data))
       })
       .catch(err => {
           console.log(err)
           setLoading(false)
       })
 
+    }
+
+    const handleRemove = (couponId) => {
+        if(window.confirm('Delete?')){
+            removeCoupon(couponId, user.token).then(res => {
+                getCoupons().then(res => setCoupon(res.data))
+                toast.error(`Coupon ${res.data.name} is deleted`)
+            })
+        }
     }
 
     return (
@@ -63,6 +76,31 @@ const CreateCouponPage = () => {
 
                     <button type="submit" className="btn btn-info">Create</button>
                 </form>
+
+                <br />
+
+                <h4>{coupon.length} Coupons</h4>
+                <table className="table table-bordered">
+                    <thead className="thead-light">
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Expiry</th>
+                            <th scope="col">Discount</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {coupon.map(c => <tr key={c._id}>
+                            <td className="text-center">{c.name}</td>
+                            <td className="text-center">{ new Date(c.expiry).toLocaleDateString()}</td>
+                            <td className="text-center">{c.discount}%</td>
+                            <td className="text-center">
+                                <DeleteOutlined onClick={() => handleRemove(c._id)} className="text-danger pointer" />
+                            </td>
+                        </tr>)}
+                    </tbody>
+                </table>
 
             </div>
         </div>
