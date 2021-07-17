@@ -33,6 +33,7 @@ import Shop from './pages/Shop';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import CreateCouponPage from './pages/coupon/CreateCouponPage';
+import Paymnet from './pages/Paymnet';
 
 
 
@@ -86,6 +87,7 @@ function App() {
           <UserRoute path="/user/wishlist" exact component={Wishlist} />
           
           <UserRoute path="/checkout" exact component={Checkout} />
+          <UserRoute path="/payment" exact component={Paymnet} />
 
           <AdminRoute path="/admin/dashboard" exact component={AdminDashboard} />
           <AdminRoute path="/admin/category" exact component={CategoryCreate} />

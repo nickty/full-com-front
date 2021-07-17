@@ -6,7 +6,7 @@ import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 
 
-const Checkout = () => {
+const Checkout = ({history}) => {
     const [address, setAddress] = useState('')
     const [addressSaved, setAddressSaved] = useState(false)
 
@@ -96,7 +96,11 @@ const Checkout = () => {
         .then( res => {
             if(res.data){
                 setTotalAfterDiscount(res.data)
-                //push the totalAfterDisocunt to redux
+                //push the totalAfterDisocunt to redux true/false
+                dispatch({
+                    type: "COUPON_APPLIED",
+                    payload: true
+                })
             }
             if(res.data.err){
                 setDiscoutError(res.data.err)
@@ -133,7 +137,7 @@ const Checkout = () => {
 
                 <div className="row">
                     <div className="col-md-6">
-                        <button disabled={!addressSaved} className="btn btn-info">Place Order</button>
+                        <button onClick={() => history.push('/payment')} disabled={!addressSaved} className="btn btn-info">Place Order</button>
                     </div>
                     <div className="col-md-6">
                         <button disabled={!products.length} onClick={emptyCart} type="" className="btn btn-info">Empty Cart</button>
