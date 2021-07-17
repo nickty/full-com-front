@@ -1,4 +1,5 @@
 import { Switch, Route} from 'react-router-dom'
+import SideDrawer from './components/drawer/SideDrawer';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import Home from './pages/Home'
@@ -30,6 +31,7 @@ import CategoryHome from './pages/category/CategoryHome';
 import SubHome from './pages/sub/SubHome';
 import Shop from './pages/Shop';
 import Cart from './pages/Cart';
+
 
 
 function App() {
@@ -67,6 +69,7 @@ function App() {
 
   <>
         <Header />
+        <SideDrawer />
         <ToastContainer />
 
         <Switch>
