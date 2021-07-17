@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import { emptyUserCart, getUserCart, saveUserAddress } from '../functions/user'
+import { applyCoupon, emptyUserCart, getUserCart, saveUserAddress } from '../functions/user'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
+
 
 const Checkout = () => {
     const [address, setAddress] = useState('')
@@ -13,6 +14,9 @@ const Checkout = () => {
     const [total, setTotal] = useState(0)
 
     const [coupon, setCoupon] = useState('')
+
+    const [totalAfterDiscount, setTotalAfterDiscount] = useState('')
+    const [discountError, setDiscoutError] = useState('')
 
     const dispatch = useDispatch()
     const { user } = useSelector(state => state)
@@ -82,6 +86,19 @@ const Checkout = () => {
 
     const applyDiscountCoupon = () => {
         console.log(coupon)
+
+        applyCoupon(user.token, coupon)
+        .then( res => {
+            if(res.data){
+                setTotalAfterDiscount(res.data)
+                //push the totalAfterDisocunt to redux
+            }
+            if(res.data.err){
+                setDiscoutError(res.data.err)
+                //udpate global redux state
+            }
+        })
+    
     }
  
     return (
