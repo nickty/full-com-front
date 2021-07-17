@@ -32,6 +32,7 @@ import SubHome from './pages/sub/SubHome';
 import Shop from './pages/Shop';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
+import CreateCouponPage from './pages/coupon/CreateCouponPage';
 
 
 
@@ -96,6 +97,8 @@ function App() {
           <AdminRoute path="/admin/product" exact component={ProductCreate} />
           <AdminRoute path="/admin/products" exact component={AllProducts} />
           <AdminRoute path="/admin/product/:slug" exact component={ProductUpdate} />
+
+          <AdminRoute path="/admin/coupon" exact component={CreateCouponPage} />
 
           <Route path="/product/:slug" exact component={Product} />
 
