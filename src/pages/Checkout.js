@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getUserCart } from '../functions/user'
+import { toast } from 'react-toastify'
+import { emptyUserCart, getUserCart } from '../functions/user'
 
 const Checkout = () => {
 
@@ -21,15 +22,29 @@ const Checkout = () => {
     }, [])
 
 
-    const saveAddressToDB = () => {
+    const emptyCart = () => {
+        if(typeof window !== undefined){
+            localStorage.removeItem('cart')
+        }
 
+        dispatch({
+            type: 'ADD_TO_CART', 
+            payload: []
+        })
+
+        emptyUserCart(user.token)
+        .then(res => {
+            setProducts([])
+            toast.success('Cart is empty now, Continue shopping again!')
+            setTotal('')
+        })
     }
+
+
     return (
         <div className="row">
             <div className="col-md-6">
                 <h4>Delivery Address</h4>
-
-                <button type="" onClick={saveAddressToDB}>Save</button>
                 <hr />
                 <h4>Got Coupon?</h4>
                 coupon input and apploy button
@@ -50,10 +65,10 @@ const Checkout = () => {
 
                 <div className="row">
                     <div className="col-md-6">
-                        <button type="">Place Order</button>
+                        <button type="" className="btn btn-info">Place Order</button>
                     </div>
                     <div className="col-md-6">
-                        <button type="">Empty Cart</button>
+                        <button disabled={!products.length} onClick={emptyCart} type="" className="btn btn-info">Empty Cart</button>
                     </div>
                 </div>
             </div>
