@@ -2,6 +2,7 @@ import React from 'react'
 import ModalImage from 'react-modal-image'
 import { useDispatch } from 'react-redux'
 import laptop from '../../images/product.png'
+import { toast } from 'react-toastify'
 
 const ProductCartInCheckout = ({p}) => {
     const dispatch = useDispatch()
@@ -31,6 +32,37 @@ const ProductCartInCheckout = ({p}) => {
             })
         }
     }
+    const handleQuantityChange = (e) => {
+        
+        let counting = e.target.value < 1 ? 1 : e.target.value
+
+        if(counting > p.quantity){
+            toast.error(`Max available quantity: ${p.quantity}`)
+            return;
+        }
+
+        let cart = []
+
+        if(typeof window !==undefined){
+            if(localStorage.getItem('cart')){
+                cart = JSON.parse(localStorage.getItem('cart'))
+            }
+        }
+
+        cart.map((product, i ) => {
+            if(product._id === p._id){
+                cart[i].count = counting
+            }
+        })
+
+        // console.log('cart update')
+        localStorage.setItem("cart", JSON.stringify(cart))
+
+        dispatch({
+            type: "ADD_TO_CART", 
+            payload: cart
+        })
+    }
     return (
         <tbody>
             <tr>
@@ -48,7 +80,9 @@ const ProductCartInCheckout = ({p}) => {
                         </option>)}
                     </select>
                 </td>
-                <td>{p.count}</td>
+                <td className="text-center">
+                    <input onChange={handleQuantityChange} type="number" className="form-control" name="" value={p.count} />
+                </td>
                 <td>shipping</td>
                 <td>Delete</td>
             </tr>
