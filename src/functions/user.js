@@ -29,3 +29,9 @@ export const applyCoupon = async (authtoken, coupon) => await axios.post(`${proc
         authtoken
     }
 })
+
+export const createOrder = async (authtoken, stripeResponse) => await axios.post(`${process.env.REACT_APP_API}/user/order`, {stripeResponse}, {
+    headers: {
+        authtoken
+    }
+})

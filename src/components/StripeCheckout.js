@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { Card } from 'antd'
 import { DollarOutlined, CheckOutlined } from '@ant-design/icons'
 import laptop from '../images/mern.jpg'
+import { createOrder, emptyUserCart } from '../functions/user'
 
 const StripeCheckout = ({history}) => {
 
@@ -53,6 +54,26 @@ const StripeCheckout = ({history}) => {
             setError(`Payment failed ${payload.error.message}`)
             setShowProcessing(false)
         } else {
+
+            createOrder(user.token, payload)
+            .then(res => {
+                if(res.data.ok){
+                    //emptry cart from local storage
+                    if(typeof window !== undefined) localStorage.removeItem("cart")
+                    // emtpry for form redux
+                    dispatch({
+                        type: "ADD_TO_CART",
+                        payload: []
+                    })
+                    dispatch({
+                        type: "COUPON_APPLIED",
+                        payload: []
+                    })
+                    emptyUserCart(user.token)
+                    
+                }
+            })
+
             console.log(JSON.stringify(payload, null, 4))
             setError(null)
             setShowProcessing(false)
