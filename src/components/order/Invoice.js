@@ -36,7 +36,7 @@ const Invoice = ({order}) => {
                {/* {console.log(JSON.stringify(order))} */}
 
                     <Text style={styles.text}>
-                        <Text>Date: {'                '} {new Date(order.paymentIntent.created).toLocaleString()}</Text>
+                        <Text>Date: {'            '} {new Date(order.paymentIntent.created).toLocaleString()}</Text>
                         {'\n'}
                         <Text>Order Id: {'         '} {order.paymentIntent.id}</Text>
                         {'\n'}
