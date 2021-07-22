@@ -5,6 +5,7 @@ import { changeStatus, getOrders } from '../../functions/admin'
 import { getProductsByCount } from '../../functions/product'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+import Orders from '../../components/order/Orders'
 
 
 const AdminDashboard = () => {
@@ -35,9 +36,9 @@ const AdminDashboard = () => {
                 <div className="col-md-2">
                     <AdminNav />
                 </div>
-                <div className="col">
+                <div className="col-md-10">
                   <h4>Admin Dasboard</h4> 
-                 
+                <Orders orders={orders} handleStatusChange={handleStatusChange} />
                 </div>
             </div>
         </div>
