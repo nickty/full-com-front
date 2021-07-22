@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import ShowPaymentInfo from '../../components/cards/ShowPaymentInfo'
 import UserNav from '../../components/nav/UserNav'
 import { getUserOrder } from '../../functions/user'
+import { Document, Page, Text, View, StyleSheet, PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
 
-const History = () => {
+const History = (order) => {
 
     const dispatch = useDispatch()
     const { user } = useSelector(state => state)
@@ -78,11 +79,29 @@ const History = () => {
             {showOrderInTable(order)}
             <div className="row">
                 <div className="col">
-                    <p>PDF Download</p>
+                    <div>{showDownlaodLink()}</div>
                 </div>
             </div>
         </div>
     ));
+
+    const showDownlaodLink = () => (
+        <PDFDownloadLink document={
+            <Document>
+                <Page size="A4">
+                    <View>
+                        <Text>Section #1</Text>
+                        <Text>Section #2</Text>
+                    </View>
+                </Page>
+            </Document>
+            
+        }
+        fileName='invoice.pdf'
+        className="btn btn-sm btn-block">
+           Download PDF
+        </PDFDownloadLink>
+    )
 
     return (
         <div className="container-fluid">
