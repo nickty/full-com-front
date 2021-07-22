@@ -1,6 +1,6 @@
 import React from 'react'
-import { Document, Page, Text, View, StyleSheet, PDFViewer } from '@react-pdf/renderer';
-import { Table, TableHeader, TableCell, TableBody, DataTableCell } from '@medicaboo/react-pdf-table'
+import { Document, Page, Text, View, StyleSheet, PDFViewer, G } from '@react-pdf/renderer';
+import { Table, TableHeader, TableCell, TableBody, DataTableCell } from '@david.kucsai/react-pdf-table'
 
 const Invoice = ({order}) => {
     return (
@@ -10,6 +10,42 @@ const Invoice = ({order}) => {
                <Text style={styles.title}>Order Invoice</Text>
                <Text style={styles.author}>Full stack MERN Ecommerce</Text>
                <Text style={styles.subtitle}>Order Summery</Text>
+
+               <Table>
+                   <TableHeader>
+                       <TableCell>Title</TableCell>
+                       <TableCell>Price</TableCell>
+                       <TableCell>Quantity</TableCell>
+                       <TableCell>Brand</TableCell>
+                       <TableCell>Color</TableCell>
+                   </TableHeader>
+               </Table>
+
+               <Table data={order.products}>
+                   <TableBody>
+                       <DataTableCell getContent={x => x.product.title} />
+                       <DataTableCell getContent={x => `$${x.product.price}`} />
+                       <DataTableCell getContent={x => x.count} />
+                       <DataTableCell getContent={x => x.product.brand} />
+                       <DataTableCell getContent={x => x.color} />
+                     
+                   </TableBody>
+                 
+               </Table>
+
+               {/* {console.log(JSON.stringify(order))} */}
+
+                    <Text style={styles.text}>
+                        <Text>Date: {'                '} {new Date(order.paymentIntent.created).toLocaleString()}</Text>
+                        {'\n'}
+                        <Text>Order Id: {'         '} {order.paymentIntent.id}</Text>
+                        {'\n'}
+                        <Text>Order Status: {'   '} {order.orderStatus}</Text>
+                        {'\n'}
+                        <Text>Total Paid: {'       '} {order.paymentIntent.amount}</Text>
+                    </Text>
+
+               <Text style={styles.footer}>~ Thank you for shopping with us ~</Text>
            </Page>
        </Document>
     )

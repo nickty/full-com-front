@@ -7,7 +7,7 @@ import { getUserOrder } from '../../functions/user'
 import { Document, Page, PDFDownloadLink } from '@react-pdf/renderer';
 import Invoice from '../../components/order/Invoice'
 
-const History = (order) => {
+const History = () => {
 
     const dispatch = useDispatch()
     const { user } = useSelector(state => state)
@@ -80,21 +80,20 @@ const History = (order) => {
             {showOrderInTable(order)}
             <div className="row">
                 <div className="col">
-                    <div>{showDownlaodLink()}</div>
+                    <div>{showDownlaodLink(order)}</div>
                 </div>
             </div>
         </div>
     ));
 
-    const showDownlaodLink = () => (
+    const showDownlaodLink = (order) => (
         <PDFDownloadLink document={
-            
-                <Invoice order={order} />
-               
-            
+           <Invoice order={order} /> 
+           
         }
-        fileName='invoice.pdf'
-        className="btn btn-block">
+            fileName='invoice.pdf'
+           className="btn btn-block">
+       
            Download PDF
         </PDFDownloadLink>
     )
