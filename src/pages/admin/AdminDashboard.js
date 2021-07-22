@@ -1,10 +1,33 @@
 import React, { useEffect, useState } from 'react'
 import AdminProductCard from '../../components/cards/AdminProductCard'
 import AdminNav from '../../components/nav/AdminNav'
+import { changeStatus, getOrders } from '../../functions/admin'
 import { getProductsByCount } from '../../functions/product'
+import { useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
+
 
 const AdminDashboard = () => {
 
+    const [orders, setOrders] = useState([])
+    const { user } = useSelector(state => state)
+
+    useEffect(() => {
+        loadOrders()
+    }, [])
+
+    const loadOrders = () => getOrders(user.token)
+    .then(res => {
+        setOrders(res.data)
+    })
+
+    const handleStatusChange = (orderId, orderStatus) => {
+        changeStatus(orderId, orderStatus, user.token)
+        .then(res => {
+            toast.success("Status updated")
+            loadOrders()
+        })
+    }
    
     return (
         <div className="container-fluid">
@@ -13,7 +36,8 @@ const AdminDashboard = () => {
                     <AdminNav />
                 </div>
                 <div className="col">
-                  admin dasboard
+                  <h4>Admin Dasboard</h4> 
+                 
                 </div>
             </div>
         </div>
