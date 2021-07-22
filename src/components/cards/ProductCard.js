@@ -61,7 +61,7 @@ const ProductCard = ({product}) => {
             <img src={images && images.length ? images[0].url : productImage } style={{height: "150px", objectFit: "cover"}} />
         }
         actions={[
-            <Link to={`/product/${slug}`}><EyeOutlined className="text-info" /> <br/> View Product</Link>,<Tooltip title={tooltip}> <a onClick={handleAddtocart}><ShoppingCartOutlined className="text-warning"/> <br/> Add to cart</a></Tooltip>
+            <Link to={`/product/${slug}`}><EyeOutlined className="text-info" /> <br/> View Product</Link>,<Tooltip title={tooltip}> <a onClick={handleAddtocart} disabled={product.quantity < 1}><ShoppingCartOutlined className="text-warning"/> <br/> {product.quantity < 1 ? "Out of stock" : "Add to cart"}</a></Tooltip>
         ]}
         >
             <Meta title={`${title} $${price}`} description={`${description && description.substring(0, 40)}...`} />
