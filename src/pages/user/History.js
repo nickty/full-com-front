@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import ShowPaymentInfo from '../../components/cards/ShowPaymentInfo'
 import UserNav from '../../components/nav/UserNav'
 import { getUserOrder } from '../../functions/user'
-import { Document, Page, Text, View, StyleSheet, PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
+import { Document, Page, PDFDownloadLink } from '@react-pdf/renderer';
+import Invoice from '../../components/order/Invoice'
 
 const History = (order) => {
 
@@ -87,18 +88,13 @@ const History = (order) => {
 
     const showDownlaodLink = () => (
         <PDFDownloadLink document={
-            <Document>
-                <Page size="A4">
-                    <View>
-                        <Text>Section #1</Text>
-                        <Text>Section #2</Text>
-                    </View>
-                </Page>
-            </Document>
+            
+                <Invoice order={order} />
+               
             
         }
         fileName='invoice.pdf'
-        className="btn btn-sm btn-block">
+        className="btn btn-block">
            Download PDF
         </PDFDownloadLink>
     )
