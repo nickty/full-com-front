@@ -20,6 +20,7 @@ const Checkout = ({history}) => {
 
     const dispatch = useDispatch()
     const { user, cod } = useSelector(state => state)
+    const couponTrueOrFalse = useSelector(state => state.coupon)
 
     useEffect(() => {
        getUserCart(user.token)
@@ -111,9 +112,34 @@ const Checkout = ({history}) => {
     }
 
     const createCashOrder = () => {
-        createCashOrderForUser(user.token).then(res => {
+        createCashOrderForUser(user.token, cod, couponTrueOrFalse).then(res => {
             console.log('User Cash order Created res', res)
-            
+
+            if(res.data.ok){
+                
+                if(typeof window !== undefined) localStorage.removeItem('cart')
+                dispatch({
+                    type: 'ADD_TO_CART',
+                    payload: []
+                })
+
+                dispatch({
+                    type: 'COUPON_APPLIED',
+                    payload: false
+                })
+
+                dispatch({
+                    type: 'COD',
+                    payload: false
+                })
+
+                emptyUserCart(user.token)
+
+                setTimeout(() => {
+                    history.push('/user/history')
+                }, 1000)
+            }
+
         })
     }
  
