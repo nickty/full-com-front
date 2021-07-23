@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import { applyCoupon, emptyUserCart, getUserCart, saveUserAddress } from '../functions/user'
+import { applyCoupon, createCashOrderForUser, emptyUserCart, getUserCart, saveUserAddress } from '../functions/user'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 
@@ -19,7 +19,7 @@ const Checkout = ({history}) => {
     const [discountError, setDiscoutError] = useState('')
 
     const dispatch = useDispatch()
-    const { user } = useSelector(state => state)
+    const { user, cod } = useSelector(state => state)
 
     useEffect(() => {
        getUserCart(user.token)
@@ -109,6 +109,13 @@ const Checkout = ({history}) => {
         })
     
     }
+
+    const createCashOrder = () => {
+        createCashOrderForUser(user.token).then(res => {
+            console.log('User Cash order Created res', res)
+            
+        })
+    }
  
     return (
         <div className="row">
@@ -137,7 +144,9 @@ const Checkout = ({history}) => {
 
                 <div className="row">
                     <div className="col-md-6">
-                        <button onClick={() => history.push('/payment')} disabled={!addressSaved} className="btn btn-info">Place Order</button>
+                        {cod ? <button onClick={createCashOrder} disabled={!addressSaved} className="btn btn-info">Place Order</button> : 
+                            <button onClick={() => history.push('/payment')} disabled={!addressSaved} className="btn btn-info">Place Order</button>
+                        }
                     </div>
                     <div className="col-md-6">
                         <button disabled={!products.length} onClick={emptyCart} type="" className="btn btn-info">Empty Cart</button>
