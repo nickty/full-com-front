@@ -29,7 +29,7 @@ const Home = () => {
            <CategoryList />
            <br />
 
-           <h4 className="text-center p-3 mt-5 mb-5 jumbotron">Sub-Categories</h4>
+           <h4 className="text-center p-3 mt-5 mb-5 jumbotron">Sub Categories</h4>
            
            <SubList />
            <br />
