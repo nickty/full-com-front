@@ -248,7 +248,7 @@ const Shop = () => {
     } 
 
     return (
-        <div className="container-fluid">
+        <div className="container mt-5">
             <div className="row">
                 <div className="col-md-3 p-2">
                     <h4>Search/Filter</h4>
