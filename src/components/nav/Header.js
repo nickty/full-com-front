@@ -37,7 +37,7 @@ const Header = () => {
     }
 
     return (
-        <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal" className="d-block">
+        <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal" className="d-block container m-auto">
             <Item key="home" icon={<AppstoreOutlined /> }>
               <Link to="">Home</Link> 
             </Item>

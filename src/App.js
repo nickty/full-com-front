@@ -95,9 +95,9 @@ function App() {
 
 
   return (
-
+    
   <Suspense fallback={
-    <div className="col text-center display-1 p-5">
+    <div className="col text-center h2 p-5 pt-10">
       <LoadingOutlined />
     </div>
   }>
